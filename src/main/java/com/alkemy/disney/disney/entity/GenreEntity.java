@@ -3,21 +3,22 @@ package com.alkemy.disney.disney.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Tables;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "genero")
+@Table(name = "genre")
 @Getter
 @Setter
-public class GeneroEntity {
+public class GenreEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private String nombre;
+    private String name;
 
-    private String imagen;
+    private String image;
+
+    private Boolean deleted;
 }
