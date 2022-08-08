@@ -1,6 +1,7 @@
 package com.alkemy.disney.disney.entity;
 
 
+import com.alkemy.disney.disney.enums.Score;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +29,7 @@ public class MovieEntity {
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate creationDate;
 
-    private Integer score; //del 1 al 5
+    private Score score;
 
     private Boolean deleted;
 
