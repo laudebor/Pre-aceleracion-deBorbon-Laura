@@ -6,5 +6,7 @@ import com.alkemy.disney.disney.error.ServiceError;
 public interface CharacterService {
 
     CharacterDTO save(CharacterDTO dto) throws ServiceError;
+    CharacterDTO update(CharacterDTO dto) throws ServiceError;
+    void delete(Long id);
 
 }

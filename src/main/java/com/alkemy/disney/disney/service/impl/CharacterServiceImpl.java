@@ -27,4 +27,20 @@ public class CharacterServiceImpl implements CharacterService {
         CharacterDTO resultDTO = characterMapper.characterEntity2DTO(entitySaved, true);
         return resultDTO;
     }
+
+    @Transactional
+    public CharacterDTO update(CharacterDTO dto) throws ServiceError {
+        if(dto.getId()==null){
+            throw new ServiceError("id field empty");
+        }else {
+            CharacterEntity entity = characterMapper.characterDTO2Entity(dto);
+            CharacterEntity entitySaved = characterRepository.save(entity);
+            CharacterDTO resultDTO = characterMapper.characterEntity2DTO(entitySaved, true);
+            return resultDTO;
+        }
+    }
+
+    public void delete(Long id) {
+        characterRepository.deleteById(id);
+    }
 }
