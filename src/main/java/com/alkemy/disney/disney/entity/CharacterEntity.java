@@ -28,7 +28,7 @@ public class CharacterEntity {
 
     private String story;
 
-    private Boolean deleted;
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToMany(mappedBy = "characters", cascade = CascadeType.MERGE)
     private List<MovieEntity> movies = new ArrayList<>();
