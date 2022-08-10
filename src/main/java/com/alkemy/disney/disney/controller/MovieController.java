@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("movies")
 public class MovieController {
@@ -25,6 +27,12 @@ public class MovieController {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MovieDTO>> getAll(){
+        List<MovieDTO> movies = movieService.getAll();
+        return ResponseEntity.ok().body(movies);
     }
 
     @PostMapping("/update")

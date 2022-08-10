@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -41,6 +42,12 @@ public class MovieServiceImpl implements MovieService {
             return resultDTO;
         }
     }
+
+    public List<MovieDTO> getAll(){
+        List<MovieDTO> movies = movieMapper.movieEntityList2DTOList(movieRepository.findAll(), true);
+        return movies;
+    }
+
     public void delete(Long id){
         movieRepository.deleteById(id);
     }
