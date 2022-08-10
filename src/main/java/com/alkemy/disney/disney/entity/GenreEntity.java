@@ -3,6 +3,8 @@ package com.alkemy.disney.disney.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -10,6 +12,8 @@ import javax.persistence.*;
 @Table(name = "genre")
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE genre SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class GenreEntity {
 
     @Id
@@ -20,5 +24,5 @@ public class GenreEntity {
 
     private String image;
 
-    private Boolean deleted;
+    private boolean deleted = Boolean.FALSE;
 }

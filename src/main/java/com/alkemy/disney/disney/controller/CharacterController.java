@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.xml.bind.SchemaOutputResolver;
 
 @RestController
-@RequestMapping("/characters")
+@RequestMapping("characters")
 public class CharacterController {
 
     @Autowired
