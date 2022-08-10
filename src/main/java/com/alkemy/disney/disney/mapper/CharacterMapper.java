@@ -36,11 +36,33 @@ public class CharacterMapper {
             Optional<CharacterEntity> result = characterRepository.findById(dto.getId());
             if(result.isPresent()){
                 entity = result.get();
-                //entity.setImage(dto.getImage());
-                //entity.setName(dto.getName());
-                //entity.setAge(dto.getAge());
-                //entity.setWeight(dto.getWeight());
-                //entity.setStory(dto.getStory());
+                entity.setImage(dto.getImage());
+                entity.setName(dto.getName());
+                entity.setAge(dto.getAge());
+                entity.setWeight(dto.getWeight());
+                entity.setStory(dto.getStory());
+                return entity;
+            }else{
+                throw new ServiceError("id not found");
+            }
+        }
+
+    }
+
+    public CharacterEntity characterDTO2EntityMovieCreation(CharacterDTO dto) throws ServiceError {
+        CharacterEntity entity;
+        if(dto.getId()==null){
+            entity = new CharacterEntity();
+            entity.setImage(dto.getImage());
+            entity.setName(dto.getName());
+            entity.setAge(dto.getAge());
+            entity.setWeight(dto.getWeight());
+            entity.setStory(dto.getStory());
+            return entity;
+        }else{
+            Optional<CharacterEntity> result = characterRepository.findById(dto.getId());
+            if(result.isPresent()){
+                entity = result.get();
                 return entity;
             }else{
                 throw new ServiceError("id not found");
@@ -84,6 +106,14 @@ public class CharacterMapper {
         Set<CharacterEntity> entities = new HashSet<>();
         for(CharacterDTO aux : dtos){
             entities.add(characterDTO2Entity(aux));
+        }
+        return entities;
+    }
+
+    public Set<CharacterEntity> characterDTOList2EntitySetMovieCreation(List<CharacterDTO> dtos) throws ServiceError {
+        Set<CharacterEntity> entities = new HashSet<>();
+        for(CharacterDTO aux : dtos){
+            entities.add(characterDTO2EntityMovieCreation(aux));
         }
         return entities;
     }

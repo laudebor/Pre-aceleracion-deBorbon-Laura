@@ -30,12 +30,13 @@ public class MovieMapper {
             entity.setCreationDate(dto.getCreationDate());
             entity.setScore(dto.getScore());
             entity.setGenreId(dto.getGenreId());
-            entity.setCharacters(characterMapper.characterDTOList2EntitySet(dto.getCharacters()));
+            entity.setCharacters(characterMapper.characterDTOList2EntitySetMovieCreation(dto.getCharacters()));
             return entity;
         }else {
             Optional<MovieEntity> result = movieRepository.findById(dto.getId());
             if (result.isPresent()) {
                 entity = result.get();
+                entity.setCharacters(characterMapper.characterDTOList2EntitySetMovieCreation(dto.getCharacters()));
                 return entity;
             } else {
                 throw new ServiceError("id not found");
