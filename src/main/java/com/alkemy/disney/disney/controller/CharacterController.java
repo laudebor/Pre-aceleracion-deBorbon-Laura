@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.SchemaOutputResolver;
+import java.util.List;
 
 @RestController
 @RequestMapping("characters")
@@ -37,6 +38,12 @@ public class CharacterController {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CharacterDTO>> getAll(){
+        List<CharacterDTO> characters = characterService.getAll();
+        return ResponseEntity.ok().body(characters);
     }
 
     @DeleteMapping("/{id}")

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CharacterServiceImpl implements CharacterService {
@@ -38,6 +39,11 @@ public class CharacterServiceImpl implements CharacterService {
             CharacterDTO resultDTO = characterMapper.characterEntity2DTO(entitySaved, true);
             return resultDTO;
         }
+    }
+
+    public List<CharacterDTO> getAll(){
+        List<CharacterDTO> characters = characterMapper.characterListEntity2DTO(characterRepository.findAll(), true);
+        return characters;
     }
 
     public void delete(Long id) {

@@ -72,6 +72,14 @@ public class CharacterMapper {
         return dtos;
     }
 
+    public List<CharacterDTO> characterListEntity2DTO(List<CharacterEntity> entities, boolean loadMovies){
+        List<CharacterDTO> dtos = new ArrayList<>();
+        for(CharacterEntity aux : entities){
+            dtos.add(characterEntity2DTO(aux, loadMovies));
+        }
+        return dtos;
+    }
+
     public Set<CharacterEntity> characterDTOList2EntitySet(List<CharacterDTO> dtos) throws ServiceError {
         Set<CharacterEntity> entities = new HashSet<>();
         for(CharacterDTO aux : dtos){
