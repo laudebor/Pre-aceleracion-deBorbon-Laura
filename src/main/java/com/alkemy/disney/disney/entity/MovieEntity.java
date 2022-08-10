@@ -4,6 +4,8 @@ package com.alkemy.disney.disney.entity;
 import com.alkemy.disney.disney.enums.Score;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,6 +17,8 @@ import java.util.Set;
 @Table(name = "movie")
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE movie SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class MovieEntity {
 
     @Id
@@ -31,7 +35,7 @@ public class MovieEntity {
 
     private Score score;
 
-    private Boolean deleted;
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToOne(fetch = FetchType.EAGER,
             cascade = {

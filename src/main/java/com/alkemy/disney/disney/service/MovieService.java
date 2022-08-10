@@ -6,4 +6,6 @@ import com.alkemy.disney.disney.error.ServiceError;
 public interface MovieService {
 
     MovieDTO save(MovieDTO dto) throws ServiceError;
+
+    void delete(Long id);
 }

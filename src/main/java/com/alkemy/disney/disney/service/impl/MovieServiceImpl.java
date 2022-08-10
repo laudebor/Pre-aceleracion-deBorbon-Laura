@@ -24,4 +24,8 @@ public class MovieServiceImpl implements MovieService {
         MovieDTO resultDTO = movieMapper.movieEntity2DTO(entitySaved, true);
         return resultDTO;
     }
+
+    public void delete(Long id){
+        movieRepository.deleteById(id);
+    }
 }
