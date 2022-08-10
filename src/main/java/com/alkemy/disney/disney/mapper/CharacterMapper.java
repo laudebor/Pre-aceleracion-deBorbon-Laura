@@ -36,11 +36,11 @@ public class CharacterMapper {
             Optional<CharacterEntity> result = characterRepository.findById(dto.getId());
             if(result.isPresent()){
                 entity = result.get();
-                entity.setImage(dto.getImage());
-                entity.setName(dto.getName());
-                entity.setAge(dto.getAge());
-                entity.setWeight(dto.getWeight());
-                entity.setStory(dto.getStory());
+                //entity.setImage(dto.getImage());
+                //entity.setName(dto.getName());
+                //entity.setAge(dto.getAge());
+                //entity.setWeight(dto.getWeight());
+                //entity.setStory(dto.getStory());
                 return entity;
             }else{
                 throw new ServiceError("id not found");
