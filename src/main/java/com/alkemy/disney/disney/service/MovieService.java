@@ -7,5 +7,7 @@ public interface MovieService {
 
     MovieDTO save(MovieDTO dto) throws ServiceError;
 
+    MovieDTO update(MovieDTO dto) throws ServiceError;
+
     void delete(Long id);
 }

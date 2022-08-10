@@ -1,5 +1,6 @@
 package com.alkemy.disney.disney.controller;
 
+import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.error.ServiceError;
 import com.alkemy.disney.disney.service.MovieService;
@@ -24,6 +25,17 @@ public class MovieController {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<MovieDTO> update(@RequestBody MovieDTO dto){
+        try{
+            MovieDTO movieUpdated = movieService.update(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(movieUpdated);
+        } catch (ServiceError e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @DeleteMapping("/{id}")

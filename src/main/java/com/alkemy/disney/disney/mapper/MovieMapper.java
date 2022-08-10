@@ -60,6 +60,22 @@ public class MovieMapper {
         return dto;
     }
 
+    public MovieEntity movieDTO2EntityUpdate(MovieDTO dto) throws ServiceError {
+        Optional<MovieEntity> result = movieRepository.findById(dto.getId());
+        if (result.isPresent()) {
+            MovieEntity entity = result.get();
+            entity.setImage(dto.getImage());
+            entity.setTitle(dto.getTitle());
+            entity.setCreationDate(dto.getCreationDate());
+            entity.setScore(dto.getScore());
+            entity.setGenreId(dto.getGenreId());
+            entity.setCharacters(entity.getCharacters());
+            return entity;
+            } else {
+                throw new ServiceError("id not found");
+            }
+        }
+
     public List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entities, boolean loadCharacters){
         List<MovieDTO> dtos = new ArrayList<>();
         for(MovieEntity aux : entities){
