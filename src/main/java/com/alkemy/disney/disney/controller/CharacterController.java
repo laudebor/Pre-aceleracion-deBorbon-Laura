@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("characters")
@@ -40,7 +40,7 @@ public class CharacterController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<CharacterDTO>> getAll(){
         List<CharacterDTO> characters = characterService.getAll();
         return ResponseEntity.ok().body(characters);
@@ -50,6 +50,17 @@ public class CharacterController {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         characterService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CharacterDTO>> getByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long age,
+            @RequestParam(required = false) Set<Long> movies,
+            @RequestParam(required = false, defaultValue="ASC") String order
+    ){
+        List<CharacterDTO> characters = characterService.getByFilters(name, age, movies, order);
+        return ResponseEntity.ok(characters);
     }
 
 }
