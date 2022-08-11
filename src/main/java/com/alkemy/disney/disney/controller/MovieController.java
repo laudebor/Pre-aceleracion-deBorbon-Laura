@@ -71,4 +71,14 @@ public class MovieController {
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @DeleteMapping("/{idMovie}/characters/{idCharacter}")
+    public ResponseEntity<Void> removeCharacter(@PathVariable Long idMovie, @PathVariable Long idCharacter){
+        try {
+            movieService.removeCharacter(idMovie, idCharacter);
+        } catch (ServiceError e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

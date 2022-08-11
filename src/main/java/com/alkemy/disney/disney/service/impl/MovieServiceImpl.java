@@ -85,4 +85,21 @@ public class MovieServiceImpl implements MovieService {
             throw new ServiceError("movieId not found");
         }
     }
+
+    public void removeCharacter(Long movieId, Long characterId) throws ServiceError {
+        Optional<MovieEntity> movieResult = movieRepository.findById(movieId);
+        if(movieResult.isPresent()){
+            MovieEntity movieEntity = movieResult.get();
+            Optional<CharacterEntity> characterResult = characterRepository.findById(characterId);
+            if(characterResult.isPresent()){
+                CharacterEntity characterEntity = characterResult.get();
+                movieEntity.getCharacters().remove(characterEntity);
+                movieRepository.save(movieEntity);
+            }else{
+                throw new ServiceError("characterId not found");
+            }
+        }else{
+            throw new ServiceError("movieId not found");
+        }
+    }
 }
