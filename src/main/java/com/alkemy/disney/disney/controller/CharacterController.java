@@ -1,5 +1,6 @@
 package com.alkemy.disney.disney.controller;
 
+import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.error.ServiceError;
 import com.alkemy.disney.disney.service.CharacterService;
@@ -53,13 +54,13 @@ public class CharacterController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CharacterDTO>> getByFilters(
+    public ResponseEntity<List<CharacterBasicDTO>> getByFilters(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Long age,
             @RequestParam(required = false) Set<Long> movies,
             @RequestParam(required = false, defaultValue="ASC") String order
     ){
-        List<CharacterDTO> characters = characterService.getByFilters(name, age, movies, order);
+        List<CharacterBasicDTO> characters = characterService.getByFilters(name, age, movies, order);
         return ResponseEntity.ok(characters);
     }
 

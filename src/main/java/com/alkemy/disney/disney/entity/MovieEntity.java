@@ -33,6 +33,7 @@ public class MovieEntity {
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate creationDate;
 
+    //@Enumerated(EnumType.STRING)
     private Score score;
 
     private boolean deleted = Boolean.FALSE;

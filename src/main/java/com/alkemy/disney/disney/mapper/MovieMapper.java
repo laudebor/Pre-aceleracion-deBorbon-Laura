@@ -1,6 +1,7 @@
 package com.alkemy.disney.disney.mapper;
 
 import com.alkemy.disney.disney.dto.CharacterDTO;
+import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.MovieEntity;
 import com.alkemy.disney.disney.error.ServiceError;
@@ -82,6 +83,22 @@ public class MovieMapper {
             dtos.add(movieEntity2DTO(aux, loadCharacters));
         }
         return dtos;
+    }
+
+    public MovieBasicDTO movieEntity2BasicDTO(MovieEntity entity){
+        MovieBasicDTO basicDTO = new MovieBasicDTO();
+        basicDTO.setImage(entity.getImage());
+        basicDTO.setTitle(entity.getTitle());
+        basicDTO.setCreationDate(entity.getCreationDate());
+        return basicDTO;
+    }
+
+    public List<MovieBasicDTO> movieEntityList2BasicDTO(List<MovieEntity> entities){
+        List<MovieBasicDTO> basicDTOs = new ArrayList<>();
+        for(MovieEntity aux : entities){
+            basicDTOs.add(movieEntity2BasicDTO(aux));
+        }
+        return basicDTOs;
     }
 
 

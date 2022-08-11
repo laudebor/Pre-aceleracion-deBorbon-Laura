@@ -1,5 +1,6 @@
 package com.alkemy.disney.disney.service;
 
+import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.error.ServiceError;
 
@@ -15,5 +16,5 @@ public interface MovieService {
 
     void delete(Long id);
 
-    List<MovieDTO> getByFilters(String name, Long genre, String order);
+    List<MovieBasicDTO> getByFilters(String name, Long genre, String order);
 }

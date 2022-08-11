@@ -1,5 +1,6 @@
 package com.alkemy.disney.disney.mapper;
 
+import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
@@ -116,6 +117,21 @@ public class CharacterMapper {
             entities.add(characterDTO2EntityMovieCreation(aux));
         }
         return entities;
+    }
+
+    public CharacterBasicDTO characterEntity2BasicDTO(CharacterEntity entity){
+        CharacterBasicDTO basicDTO = new CharacterBasicDTO();
+        basicDTO.setImage(entity.getImage());
+        basicDTO.setName(entity.getName());
+        return basicDTO;
+    }
+
+    public List<CharacterBasicDTO> characterEntityList2BasicDTO(List<CharacterEntity> entities){
+        List<CharacterBasicDTO> basicDTOs = new ArrayList<>();
+        for(CharacterEntity aux : entities){
+            basicDTOs.add(characterEntity2BasicDTO(aux));
+        }
+        return basicDTOs;
     }
 
 }

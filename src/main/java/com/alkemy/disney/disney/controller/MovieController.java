@@ -1,5 +1,6 @@
 package com.alkemy.disney.disney.controller;
 
+import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.error.ServiceError;
 import com.alkemy.disney.disney.service.MovieService;
@@ -52,12 +53,12 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MovieDTO>> getByFilters(
+    public ResponseEntity<List<MovieBasicDTO>> getByFilters(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Long genre,
             @RequestParam(required = false, defaultValue="ASC") String order
     ){
-        List<MovieDTO> movies = movieService.getByFilters(name, genre, order);
+        List<MovieBasicDTO> movies = movieService.getByFilters(name, genre, order);
         return ResponseEntity.ok(movies);
     }
 }

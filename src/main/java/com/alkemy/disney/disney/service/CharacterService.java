@@ -1,5 +1,6 @@
 package com.alkemy.disney.disney.service;
 
+import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.error.ServiceError;
 
@@ -14,7 +15,7 @@ public interface CharacterService {
     List<CharacterDTO> getAll();
     void delete(Long id);
 
-    List<CharacterDTO> getByFilters(String name, Long age, Set<Long> movies, String order);
+    List<CharacterBasicDTO> getByFilters(String name, Long age, Set<Long> movies, String order);
 
 
 }

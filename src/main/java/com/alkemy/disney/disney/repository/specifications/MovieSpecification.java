@@ -36,7 +36,7 @@ public class MovieSpecification {
 
             query.distinct(true);
 
-            String orderByField = "title";
+            String orderByField = "creationDate";
 
             query.orderBy(
                     filtersDTO.isASC() ?
