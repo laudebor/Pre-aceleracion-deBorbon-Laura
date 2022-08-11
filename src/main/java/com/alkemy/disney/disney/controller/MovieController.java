@@ -1,6 +1,5 @@
 package com.alkemy.disney.disney.controller;
 
-import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.error.ServiceError;
 import com.alkemy.disney.disney.service.MovieService;
@@ -29,11 +28,11 @@ public class MovieController {
 
     }
 
-    @GetMapping
+/*    @GetMapping
     public ResponseEntity<List<MovieDTO>> getAll(){
         List<MovieDTO> movies = movieService.getAll();
         return ResponseEntity.ok().body(movies);
-    }
+    }*/
 
     @PostMapping("/update")
     public ResponseEntity<MovieDTO> update(@RequestBody MovieDTO dto){
@@ -50,5 +49,15 @@ public class MovieController {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         movieService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MovieDTO>> getByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long genre,
+            @RequestParam(required = false, defaultValue="ASC") String order
+    ){
+        List<MovieDTO> movies = movieService.getByFilters(name, genre, order);
+        return ResponseEntity.ok(movies);
     }
 }

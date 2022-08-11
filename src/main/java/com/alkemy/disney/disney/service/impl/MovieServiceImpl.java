@@ -1,12 +1,12 @@
 package com.alkemy.disney.disney.service.impl;
 
-import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
-import com.alkemy.disney.disney.entity.CharacterEntity;
+import com.alkemy.disney.disney.dto.MovieFiltersDTO;
 import com.alkemy.disney.disney.entity.MovieEntity;
 import com.alkemy.disney.disney.error.ServiceError;
 import com.alkemy.disney.disney.mapper.MovieMapper;
 import com.alkemy.disney.disney.repository.MovieRepository;
+import com.alkemy.disney.disney.repository.specifications.MovieSpecification;
 import com.alkemy.disney.disney.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,9 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private MovieSpecification movieSpecification;
 
     @Autowired
     private MovieMapper movieMapper;
@@ -50,5 +53,12 @@ public class MovieServiceImpl implements MovieService {
 
     public void delete(Long id){
         movieRepository.deleteById(id);
+    }
+
+    public List<MovieDTO> getByFilters(String name, Long genre, String order){
+        MovieFiltersDTO filtersDTO = new MovieFiltersDTO(name, genre, order);
+        List<MovieEntity> entities = movieRepository.findAll(movieSpecification.getByFilters(filtersDTO));
+        List<MovieDTO> dtos = movieMapper.movieEntityList2DTOList(entities, true);
+        return dtos;
     }
 }
