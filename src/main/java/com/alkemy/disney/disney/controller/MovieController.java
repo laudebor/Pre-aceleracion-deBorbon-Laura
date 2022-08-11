@@ -28,11 +28,11 @@ public class MovieController {
 
     }
 
-/*    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<MovieDTO>> getAll(){
         List<MovieDTO> movies = movieService.getAll();
         return ResponseEntity.ok().body(movies);
-    }*/
+    }
 
     @PostMapping("/update")
     public ResponseEntity<MovieDTO> update(@RequestBody MovieDTO dto){
