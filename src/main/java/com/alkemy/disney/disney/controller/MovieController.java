@@ -61,4 +61,14 @@ public class MovieController {
         List<MovieBasicDTO> movies = movieService.getByFilters(name, genre, order);
         return ResponseEntity.ok(movies);
     }
+
+    @PostMapping("/{idMovie}/characters/{idCharacter}")
+    public ResponseEntity<Void> addCharacter(@PathVariable Long idMovie, @PathVariable Long idCharacter){
+        try {
+            movieService.addCharacter(idMovie, idCharacter);
+        } catch (ServiceError e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

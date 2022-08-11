@@ -3,9 +3,11 @@ package com.alkemy.disney.disney.service.impl;
 import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.dto.MovieFiltersDTO;
+import com.alkemy.disney.disney.entity.CharacterEntity;
 import com.alkemy.disney.disney.entity.MovieEntity;
 import com.alkemy.disney.disney.error.ServiceError;
 import com.alkemy.disney.disney.mapper.MovieMapper;
+import com.alkemy.disney.disney.repository.CharacterRepository;
 import com.alkemy.disney.disney.repository.MovieRepository;
 import com.alkemy.disney.disney.repository.specifications.MovieSpecification;
 import com.alkemy.disney.disney.service.MovieService;
@@ -14,12 +16,16 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private CharacterRepository characterRepository;
 
     @Autowired
     private MovieSpecification movieSpecification;
@@ -61,5 +67,22 @@ public class MovieServiceImpl implements MovieService {
         List<MovieEntity> entities = movieRepository.findAll(movieSpecification.getByFilters(filtersDTO));
         List<MovieBasicDTO> dtos = movieMapper.movieEntityList2BasicDTO(entities);
         return dtos;
+    }
+
+    public void addCharacter(Long movieId, Long characterId) throws ServiceError {
+        Optional<MovieEntity> movieResult = movieRepository.findById(movieId);
+        if(movieResult.isPresent()){
+            MovieEntity movieEntity = movieResult.get();
+            Optional<CharacterEntity> characterResult = characterRepository.findById(characterId);
+            if(characterResult.isPresent()){
+                CharacterEntity characterEntity = characterResult.get();
+                movieEntity.getCharacters().add(characterEntity);
+                movieRepository.save(movieEntity);
+            }else{
+                throw new ServiceError("characterId not found");
+            }
+        }else{
+            throw new ServiceError("movieId not found");
+        }
     }
 }

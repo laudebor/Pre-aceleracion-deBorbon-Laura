@@ -17,4 +17,8 @@ public interface MovieService {
     void delete(Long id);
 
     List<MovieBasicDTO> getByFilters(String name, Long genre, String order);
+
+    void addCharacter(Long movieId, Long characterId) throws ServiceError;
+
+    public void removeCharacter(Long movieId, Long characterId) throws ServiceError;
 }
