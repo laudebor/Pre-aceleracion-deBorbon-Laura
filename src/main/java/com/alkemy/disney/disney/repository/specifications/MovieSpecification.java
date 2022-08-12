@@ -10,8 +10,6 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.String.valueOf;
-
 @Component
 public class MovieSpecification {
 
@@ -28,9 +26,10 @@ public class MovieSpecification {
                 );
             }
 
-            if (StringUtils.hasLength(valueOf(filtersDTO.getGenre()))) {
+            if (StringUtils.hasLength(filtersDTO.getGenre())) {
+                Long genre = Long.valueOf(filtersDTO.getGenre());
                 predicates.add(
-                        criteriaBuilder.equal(root.get("genreId"), filtersDTO.getGenre())
+                        criteriaBuilder.equal(root.get("genreId"), genre)
                 );
             }
 

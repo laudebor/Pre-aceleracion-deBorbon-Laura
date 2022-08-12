@@ -9,11 +9,11 @@ public class MovieFiltersDTO {
 
     private String name;
 
-    private Long genre;
+    private String genre;
 
     private String order;
 
-    public MovieFiltersDTO(String name, Long genre, String order) {
+    public MovieFiltersDTO(String name, String genre, String order) {
         this.name = name;
         this.genre = genre;
         this.order = order;

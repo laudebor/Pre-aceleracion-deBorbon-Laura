@@ -56,11 +56,11 @@ public class CharacterServiceImpl implements CharacterService {
         characterRepository.deleteById(id);
     }
 
-    public List<CharacterBasicDTO> getByFilters(String name, Long age, Set<Long> movies, String order){
+    public List<CharacterBasicDTO> getByFilters(String name, String age, Set<Long> movies, String order){
         CharacterFiltersDTO filtersDTO = new CharacterFiltersDTO(name, age, movies, order);
-        List<CharacterEntity> entities = characterRepository.findAll(characterSpecification.getByFilters(filtersDTO));
+        List<CharacterEntity> entities = this.characterRepository.findAll(this.characterSpecification.getByFilters(filtersDTO));
         //List<CharacterDTO> dtos = characterMapper.characterListEntity2DTO(entities, true);
-        List<CharacterBasicDTO> basicDTOs = characterMapper.characterEntityList2BasicDTO(entities);
+        List<CharacterBasicDTO> basicDTOs = this.characterMapper.characterEntityList2BasicDTO(entities);
         //return dtos;
         return basicDTOs;
     }

@@ -15,8 +15,6 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.String.valueOf;
-
 
 @Component
 public class CharacterSpecification {
@@ -34,9 +32,10 @@ public class CharacterSpecification {
                 );
             }
 
-            if (StringUtils.hasLength(valueOf(filtersDTO.getAge()))) {
+            if (StringUtils.hasLength(filtersDTO.getAge())) {
+                Long age = Long.valueOf(filtersDTO.getAge());
                 predicates.add(
-                        criteriaBuilder.equal(root.get("age"), filtersDTO.getAge())
+                        criteriaBuilder.equal(root.get("age"), age)
                 );
             }
 

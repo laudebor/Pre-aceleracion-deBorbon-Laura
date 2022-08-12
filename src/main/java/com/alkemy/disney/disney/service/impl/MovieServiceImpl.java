@@ -62,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.deleteById(id);
     }
 
-    public List<MovieBasicDTO> getByFilters(String name, Long genre, String order){
+    public List<MovieBasicDTO> getByFilters(String name, String genre, String order){
         MovieFiltersDTO filtersDTO = new MovieFiltersDTO(name, genre, order);
         List<MovieEntity> entities = movieRepository.findAll(movieSpecification.getByFilters(filtersDTO));
         List<MovieBasicDTO> dtos = movieMapper.movieEntityList2BasicDTO(entities);

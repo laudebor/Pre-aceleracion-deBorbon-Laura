@@ -55,7 +55,7 @@ public class MovieController {
     @GetMapping
     public ResponseEntity<List<MovieBasicDTO>> getByFilters(
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) Long genre,
+            @RequestParam(required = false) String genre,
             @RequestParam(required = false, defaultValue="ASC") String order
     ){
         List<MovieBasicDTO> movies = movieService.getByFilters(name, genre, order);
