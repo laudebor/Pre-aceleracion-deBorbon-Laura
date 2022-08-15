@@ -35,10 +35,10 @@ public class MovieController {
         return ResponseEntity.ok().body(movies);
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<MovieDTO> update(@RequestBody MovieDTO dto){
+    @PostMapping("/{id}")
+    public ResponseEntity<MovieDTO> update(@PathVariable Long id, @RequestBody MovieDTO dto){
         try{
-            MovieDTO movieUpdated = movieService.update(dto);
+            MovieDTO movieUpdated = movieService.update(id, dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(movieUpdated);
         } catch (ServiceError e) {
             System.out.println(e.getMessage());

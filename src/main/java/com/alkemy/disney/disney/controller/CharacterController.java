@@ -30,10 +30,10 @@ public class CharacterController {
         }
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<CharacterDTO> update(@RequestBody CharacterDTO dto){
+    @PostMapping("/{id}")
+    public ResponseEntity<CharacterDTO> update(@PathVariable Long id, @RequestBody CharacterDTO dto){
         try{
-            CharacterDTO characterUpdated = characterService.update(dto);
+            CharacterDTO characterUpdated = characterService.update(id, dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(characterUpdated);
         } catch (ServiceError e) {
             System.out.println(e.getMessage());

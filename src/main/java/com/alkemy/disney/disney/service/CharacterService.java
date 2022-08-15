@@ -10,7 +10,7 @@ import java.util.Set;
 public interface CharacterService {
 
     CharacterDTO save(CharacterDTO dto) throws ServiceError;
-    CharacterDTO update(CharacterDTO dto) throws ServiceError;
+    CharacterDTO update(Long id, CharacterDTO dto) throws ServiceError;
 
     List<CharacterDTO> getAll();
     void delete(Long id);

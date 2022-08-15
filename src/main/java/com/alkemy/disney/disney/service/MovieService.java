@@ -10,7 +10,7 @@ public interface MovieService {
 
     MovieDTO save(MovieDTO dto) throws ServiceError;
 
-    MovieDTO update(MovieDTO dto) throws ServiceError;
+    MovieDTO update(Long id, MovieDTO dto) throws ServiceError;
 
     List<MovieDTO> getAll();
 

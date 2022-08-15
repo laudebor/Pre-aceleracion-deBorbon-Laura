@@ -42,15 +42,29 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Transactional
-    public MovieDTO update(MovieDTO dto) throws ServiceError {
-        if(dto.getId()==null){
+    public MovieDTO update(Long id, MovieDTO dto) throws ServiceError {
+        Optional<MovieEntity> result = movieRepository.findById(id);
+        if(result.isPresent()){
+            MovieEntity entity = result.get();
+            dto.setId(id);
+            entity = movieMapper.movieDTO2EntityUpdate(dto);
+            MovieEntity entitySaved = movieRepository.save(entity);
+            MovieDTO resultDTO = movieMapper.movieEntity2DTO(entitySaved, true);
+            return resultDTO;
+        }else{
+            throw new ServiceError("id not found");
+        }
+
+
+
+       /* if(dto.getId()==null){
             throw new ServiceError("id field empty");
         }else {
             MovieEntity entity = movieMapper.movieDTO2EntityUpdate(dto);
             MovieEntity entitySaved = movieRepository.save(entity);
             MovieDTO resultDTO = movieMapper.movieEntity2DTO(entitySaved, true);
             return resultDTO;
-        }
+        }*/
     }
 
     public List<MovieDTO> getAll(){

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -36,14 +37,17 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Transactional
-    public CharacterDTO update(CharacterDTO dto) throws ServiceError {
-        if(dto.getId()==null){
-            throw new ServiceError("id field empty");
-        }else {
-            CharacterEntity entity = characterMapper.characterDTO2Entity(dto);
+    public CharacterDTO update(Long id, CharacterDTO dto) throws ServiceError {
+        Optional<CharacterEntity> result = characterRepository.findById(id);
+        if(result.isPresent()){
+            CharacterEntity entity = result.get();
+            dto.setId(id);
+            entity = characterMapper.characterDTO2Entity(dto);
             CharacterEntity entitySaved = characterRepository.save(entity);
             CharacterDTO resultDTO = characterMapper.characterEntity2DTO(entitySaved, true);
             return resultDTO;
+        }else{
+            throw new ServiceError("id not found");
         }
     }
 
