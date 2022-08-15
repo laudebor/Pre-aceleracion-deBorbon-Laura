@@ -4,7 +4,7 @@ import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
-import com.alkemy.disney.disney.error.ServiceError;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class CharacterMapper {
     @Autowired
     private MovieMapper movieMapper;
 
-    public CharacterEntity characterDTO2Entity(CharacterDTO dto) throws ServiceError {
+    public CharacterEntity characterDTO2Entity(CharacterDTO dto) throws ParamNotFound {
         CharacterEntity entity;
         if(dto.getId()==null){
             entity = new CharacterEntity();
@@ -44,13 +44,13 @@ public class CharacterMapper {
                 entity.setStory(dto.getStory());
                 return entity;
             }else{
-                throw new ServiceError("id not found");
+                throw new ParamNotFound("character id not found");
             }
         }
 
     }
 
-    public CharacterEntity characterDTO2EntityMovieCreation(CharacterDTO dto) throws ServiceError {
+    public CharacterEntity characterDTO2EntityMovieCreation(CharacterDTO dto) throws ParamNotFound {
         CharacterEntity entity;
         if(dto.getId()==null){
             entity = new CharacterEntity();
@@ -66,7 +66,7 @@ public class CharacterMapper {
                 entity = result.get();
                 return entity;
             }else{
-                throw new ServiceError("id not found");
+                throw new ParamNotFound("character id not found");
             }
         }
 
@@ -103,7 +103,7 @@ public class CharacterMapper {
         return dtos;
     }
 
-    public Set<CharacterEntity> characterDTOList2EntitySet(List<CharacterDTO> dtos) throws ServiceError {
+    public Set<CharacterEntity> characterDTOList2EntitySet(List<CharacterDTO> dtos) throws ParamNotFound {
         Set<CharacterEntity> entities = new HashSet<>();
         for(CharacterDTO aux : dtos){
             entities.add(characterDTO2Entity(aux));
@@ -111,7 +111,7 @@ public class CharacterMapper {
         return entities;
     }
 
-    public Set<CharacterEntity> characterDTOList2EntitySetMovieCreation(List<CharacterDTO> dtos) throws ServiceError {
+    public Set<CharacterEntity> characterDTOList2EntitySetMovieCreation(List<CharacterDTO> dtos) throws ParamNotFound {
         Set<CharacterEntity> entities = new HashSet<>();
         for(CharacterDTO aux : dtos){
             entities.add(characterDTO2EntityMovieCreation(aux));

@@ -2,15 +2,15 @@ package com.alkemy.disney.disney.service;
 
 import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
-import com.alkemy.disney.disney.error.ServiceError;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 
 import java.util.List;
 import java.util.Set;
 
 public interface CharacterService {
 
-    CharacterDTO save(CharacterDTO dto) throws ServiceError;
-    CharacterDTO update(Long id, CharacterDTO dto) throws ServiceError;
+    CharacterDTO save(CharacterDTO dto) throws ParamNotFound;
+    CharacterDTO update(Long id, CharacterDTO dto) throws ParamNotFound;
 
     List<CharacterDTO> getAll();
     void delete(Long id);

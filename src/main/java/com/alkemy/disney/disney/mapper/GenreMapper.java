@@ -2,7 +2,7 @@ package com.alkemy.disney.disney.mapper;
 
 import com.alkemy.disney.disney.dto.GenreDTO;
 import com.alkemy.disney.disney.entity.GenreEntity;
-import com.alkemy.disney.disney.error.ServiceError;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ public class GenreMapper {
     @Autowired
     private GenreRepository genreRepository;
 
-    public GenreEntity genreDTO2Entity(GenreDTO dto) throws ServiceError {
+    public GenreEntity genreDTO2Entity(GenreDTO dto) throws ParamNotFound {
         GenreEntity entity;
         if(dto.getId()==null){
             entity = new GenreEntity();
@@ -30,7 +30,7 @@ public class GenreMapper {
                 entity.setImage(dto.getImage());
                 return entity;
             }else{
-                throw new ServiceError("id not found");
+                throw new ParamNotFound("genre id not found");
             }
         }
     }

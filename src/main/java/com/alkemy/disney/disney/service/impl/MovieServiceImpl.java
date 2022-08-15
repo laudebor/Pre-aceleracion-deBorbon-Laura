@@ -5,7 +5,7 @@ import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.dto.MovieFiltersDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
 import com.alkemy.disney.disney.entity.MovieEntity;
-import com.alkemy.disney.disney.error.ServiceError;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.mapper.MovieMapper;
 import com.alkemy.disney.disney.repository.CharacterRepository;
 import com.alkemy.disney.disney.repository.MovieRepository;
@@ -34,7 +34,7 @@ public class MovieServiceImpl implements MovieService {
     private MovieMapper movieMapper;
 
     @Transactional
-    public MovieDTO save(MovieDTO dto) throws ServiceError {
+    public MovieDTO save(MovieDTO dto) throws ParamNotFound {
         MovieEntity entity = movieMapper.movieDTO2Entity(dto);
         MovieEntity entitySaved = movieRepository.save(entity);
         MovieDTO resultDTO = movieMapper.movieEntity2DTO(entitySaved, true);
@@ -42,7 +42,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Transactional
-    public MovieDTO update(Long id, MovieDTO dto) throws ServiceError {
+    public MovieDTO update(Long id, MovieDTO dto) throws ParamNotFound {
         Optional<MovieEntity> result = movieRepository.findById(id);
         if(result.isPresent()){
             MovieEntity entity = result.get();
@@ -52,19 +52,8 @@ public class MovieServiceImpl implements MovieService {
             MovieDTO resultDTO = movieMapper.movieEntity2DTO(entitySaved, true);
             return resultDTO;
         }else{
-            throw new ServiceError("id not found");
+            throw new ParamNotFound("movie id not found");
         }
-
-
-
-       /* if(dto.getId()==null){
-            throw new ServiceError("id field empty");
-        }else {
-            MovieEntity entity = movieMapper.movieDTO2EntityUpdate(dto);
-            MovieEntity entitySaved = movieRepository.save(entity);
-            MovieDTO resultDTO = movieMapper.movieEntity2DTO(entitySaved, true);
-            return resultDTO;
-        }*/
     }
 
     public List<MovieDTO> getAll(){
@@ -73,7 +62,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public void delete(Long id){
-        movieRepository.deleteById(id);
+        Optional<MovieEntity> result = movieRepository.findById(id);
+        if(result.isPresent()){
+            movieRepository.deleteById(id);
+        }else{
+            throw new ParamNotFound("movie id not found");
+        }
     }
 
     public List<MovieBasicDTO> getByFilters(String name, String genre, String order){
@@ -83,7 +77,7 @@ public class MovieServiceImpl implements MovieService {
         return dtos;
     }
 
-    public void addCharacter(Long movieId, Long characterId) throws ServiceError {
+    public void addCharacter(Long movieId, Long characterId) throws ParamNotFound {
         Optional<MovieEntity> movieResult = movieRepository.findById(movieId);
         if(movieResult.isPresent()){
             MovieEntity movieEntity = movieResult.get();
@@ -93,14 +87,14 @@ public class MovieServiceImpl implements MovieService {
                 movieEntity.getCharacters().add(characterEntity);
                 movieRepository.save(movieEntity);
             }else{
-                throw new ServiceError("characterId not found");
+                throw new ParamNotFound("character id not found");
             }
         }else{
-            throw new ServiceError("movieId not found");
+            throw new ParamNotFound("movie id not found");
         }
     }
 
-    public void removeCharacter(Long movieId, Long characterId) throws ServiceError {
+    public void removeCharacter(Long movieId, Long characterId) throws ParamNotFound {
         Optional<MovieEntity> movieResult = movieRepository.findById(movieId);
         if(movieResult.isPresent()){
             MovieEntity movieEntity = movieResult.get();
@@ -110,10 +104,10 @@ public class MovieServiceImpl implements MovieService {
                 movieEntity.getCharacters().remove(characterEntity);
                 movieRepository.save(movieEntity);
             }else{
-                throw new ServiceError("characterId not found");
+                throw new ParamNotFound("character id not found");
             }
         }else{
-            throw new ServiceError("movieId not found");
+            throw new ParamNotFound("movie id not found");
         }
     }
 }

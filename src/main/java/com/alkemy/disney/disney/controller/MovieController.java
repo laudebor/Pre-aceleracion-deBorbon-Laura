@@ -2,7 +2,7 @@ package com.alkemy.disney.disney.controller;
 
 import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
-import com.alkemy.disney.disney.error.ServiceError;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class MovieController {
         try{
             MovieDTO movieSaved = movieService.save(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(movieSaved);
-        } catch (ServiceError e) {
+        } catch (ParamNotFound e) {
             throw new RuntimeException(e);
         }
 
@@ -40,7 +40,7 @@ public class MovieController {
         try{
             MovieDTO movieUpdated = movieService.update(id, dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(movieUpdated);
-        } catch (ServiceError e) {
+        } catch (ParamNotFound e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
@@ -66,7 +66,7 @@ public class MovieController {
     public ResponseEntity<Void> addCharacter(@PathVariable Long idMovie, @PathVariable Long idCharacter){
         try {
             movieService.addCharacter(idMovie, idCharacter);
-        } catch (ServiceError e) {
+        } catch (ParamNotFound e) {
             throw new RuntimeException(e);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -76,7 +76,7 @@ public class MovieController {
     public ResponseEntity<Void> removeCharacter(@PathVariable Long idMovie, @PathVariable Long idCharacter){
         try {
             movieService.removeCharacter(idMovie, idCharacter);
-        } catch (ServiceError e) {
+        } catch (ParamNotFound e) {
             throw new RuntimeException(e);
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

@@ -1,8 +1,7 @@
 package com.alkemy.disney.disney.controller;
 
 import com.alkemy.disney.disney.dto.GenreDTO;
-import com.alkemy.disney.disney.entity.GenreEntity;
-import com.alkemy.disney.disney.error.ServiceError;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ public class GenreController {
         try {
             GenreDTO genreSaved = genreService.save(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(genreSaved);
-        } catch (ServiceError e) {
+        } catch (ParamNotFound e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }

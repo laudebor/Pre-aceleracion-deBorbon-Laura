@@ -4,7 +4,7 @@ import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.MovieEntity;
-import com.alkemy.disney.disney.error.ServiceError;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,7 @@ public class MovieMapper {
     @Autowired
     private MovieRepository movieRepository;
 
-    public MovieEntity movieDTO2Entity(MovieDTO dto) throws ServiceError {
+    public MovieEntity movieDTO2Entity(MovieDTO dto) throws ParamNotFound {
         MovieEntity entity;
         if(dto.getId()==null){
             entity = new MovieEntity();
@@ -40,7 +40,7 @@ public class MovieMapper {
                 entity.setCharacters(characterMapper.characterDTOList2EntitySetMovieCreation(dto.getCharacters()));
                 return entity;
             } else {
-                throw new ServiceError("id not found");
+                throw new ParamNotFound("movie id not found");
             }
         }
 
@@ -61,7 +61,7 @@ public class MovieMapper {
         return dto;
     }
 
-    public MovieEntity movieDTO2EntityUpdate(MovieDTO dto) throws ServiceError {
+    public MovieEntity movieDTO2EntityUpdate(MovieDTO dto) throws ParamNotFound {
         Optional<MovieEntity> result = movieRepository.findById(dto.getId());
         if (result.isPresent()) {
             MovieEntity entity = result.get();
@@ -73,7 +73,7 @@ public class MovieMapper {
             entity.setCharacters(entity.getCharacters());
             return entity;
             } else {
-                throw new ServiceError("id not found");
+                throw new ParamNotFound("movie id not found");
             }
         }
 

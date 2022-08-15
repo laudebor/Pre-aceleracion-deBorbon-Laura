@@ -2,7 +2,7 @@ package com.alkemy.disney.disney.controller;
 
 import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
-import com.alkemy.disney.disney.error.ServiceError;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.service.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class CharacterController {
         try {
             CharacterDTO characterSaved = characterService.save(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(characterSaved);
-        }catch(ServiceError e){
+        }catch(ParamNotFound e){
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -35,7 +35,7 @@ public class CharacterController {
         try{
             CharacterDTO characterUpdated = characterService.update(id, dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(characterUpdated);
-        } catch (ServiceError e) {
+        } catch (ParamNotFound e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
