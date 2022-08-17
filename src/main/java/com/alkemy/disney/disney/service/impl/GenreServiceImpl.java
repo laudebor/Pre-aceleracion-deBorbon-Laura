@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -29,13 +28,5 @@ public class GenreServiceImpl implements GenreService {
         return resultDTO;
     }
 
-    public void delete(Long id) {
-        Optional<GenreEntity> result = genreRepository.findById(id);
-        if (result.isPresent()) {
-            genreRepository.deleteById(id);
-        } else {
-            throw new ParamNotFound("genre id not found");
-        }
-    }
 
 }

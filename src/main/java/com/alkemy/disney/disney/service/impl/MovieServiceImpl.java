@@ -61,6 +61,17 @@ public class MovieServiceImpl implements MovieService {
         return movies;
     }
 
+    public MovieDTO getById(Long id){
+        Optional<MovieEntity> result = movieRepository.findById(id);
+        if(result.isPresent()){
+            MovieEntity movieEntity = result.get();
+            MovieDTO movieDTO = movieMapper.movieEntity2DTO(movieEntity, true);
+            return movieDTO;
+        }else{
+            throw new ParamNotFound("movie id not found");
+        }
+    }
+
     public void delete(Long id){
         Optional<MovieEntity> result = movieRepository.findById(id);
         if(result.isPresent()){

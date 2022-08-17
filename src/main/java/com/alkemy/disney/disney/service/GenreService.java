@@ -7,5 +7,4 @@ public interface GenreService {
 
     GenreDTO save(GenreDTO dto) throws ParamNotFound;
 
-    void delete(Long id);
 }

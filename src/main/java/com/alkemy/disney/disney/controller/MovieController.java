@@ -35,13 +35,18 @@ public class MovieController {
         return ResponseEntity.ok().body(movies);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieDTO> getById(@PathVariable Long id){
+        MovieDTO movieDTO = movieService.getById(id);
+        return ResponseEntity.ok().body(movieDTO);
+    }
+
     @PostMapping("/{id}")
     public ResponseEntity<MovieDTO> update(@PathVariable Long id, @RequestBody MovieDTO dto){
         try{
             MovieDTO movieUpdated = movieService.update(id, dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(movieUpdated);
         } catch (ParamNotFound e) {
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }

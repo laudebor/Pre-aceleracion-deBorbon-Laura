@@ -13,6 +13,8 @@ public interface CharacterService {
     CharacterDTO update(Long id, CharacterDTO dto) throws ParamNotFound;
 
     List<CharacterDTO> getAll();
+
+    public CharacterDTO getById(Long id);
     void delete(Long id);
 
     List<CharacterBasicDTO> getByFilters(String name, String age, Set<Long> movies, String order);

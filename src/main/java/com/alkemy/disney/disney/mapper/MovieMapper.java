@@ -3,8 +3,10 @@ package com.alkemy.disney.disney.mapper;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieBasicDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
+import com.alkemy.disney.disney.entity.GenreEntity;
 import com.alkemy.disney.disney.entity.MovieEntity;
 import com.alkemy.disney.disney.exception.ParamNotFound;
+import com.alkemy.disney.disney.repository.GenreRepository;
 import com.alkemy.disney.disney.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,9 @@ public class MovieMapper {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private GenreRepository genreRepository;
+
     public MovieEntity movieDTO2Entity(MovieDTO dto) throws ParamNotFound {
         MovieEntity entity;
         if(dto.getId()==null){
@@ -30,6 +35,10 @@ public class MovieMapper {
             entity.setTitle(dto.getTitle());
             entity.setCreationDate(dto.getCreationDate());
             entity.setScore(dto.getScore());
+            Optional<GenreEntity> resultGenre = genreRepository.findById(dto.getGenreId());
+            if(!resultGenre.isPresent()){
+                throw new ParamNotFound("genre id not found");
+            }
             entity.setGenreId(dto.getGenreId());
             entity.setCharacters(characterMapper.characterDTOList2EntitySetMovieCreation(dto.getCharacters()));
             return entity;
@@ -69,6 +78,10 @@ public class MovieMapper {
             entity.setTitle(dto.getTitle());
             entity.setCreationDate(dto.getCreationDate());
             entity.setScore(dto.getScore());
+            Optional<GenreEntity> resultGenre = genreRepository.findById(dto.getGenreId());
+            if(!resultGenre.isPresent()){
+                throw new ParamNotFound("genre id not found");
+            }
             entity.setGenreId(dto.getGenreId());
             entity.setCharacters(entity.getCharacters());
             return entity;

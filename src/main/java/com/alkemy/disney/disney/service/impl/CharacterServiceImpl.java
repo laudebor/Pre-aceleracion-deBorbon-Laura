@@ -56,6 +56,17 @@ public class CharacterServiceImpl implements CharacterService {
         return characters;
     }
 
+    public CharacterDTO getById(Long id){
+        Optional<CharacterEntity> result = characterRepository.findById(id);
+        if(result.isPresent()){
+            CharacterEntity characterEntity = result.get();
+            CharacterDTO characterDTO = characterMapper.characterEntity2DTO(characterEntity, true);
+            return characterDTO;
+        }else{
+            throw new ParamNotFound("character id not found");
+        }
+    }
+
     public void delete(Long id) {
         Optional<CharacterEntity> result = characterRepository.findById(id);
         if(result.isPresent()){
