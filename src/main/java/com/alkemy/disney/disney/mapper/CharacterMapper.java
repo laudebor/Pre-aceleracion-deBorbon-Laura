@@ -29,9 +29,6 @@ public class CharacterMapper {
             entity.setAge(dto.getAge());
             entity.setWeight(dto.getWeight());
             entity.setStory(dto.getStory());
-            //TODO: movieDTO2Entity entity.setMovies(dto.getMovies());
-            // QUIZAS NO HAGA FALTA, CUANDO CARGO UN PERSONAJE NO HACE FALTA CARGAR LAS PELICULAS
-            // PODEMOS HACER LA RELACION DESDE PELICULA CUANDO CARGAMOS UNA PELICULA, ASOCIAMOS LOS PERSONAJES
             return entity;
         }else{
             Optional<CharacterEntity> result = characterRepository.findById(dto.getId());

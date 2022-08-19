@@ -4,11 +4,14 @@ import com.alkemy.disney.disney.dto.CharacterBasicDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.CharacterFiltersDTO;
 import com.alkemy.disney.disney.entity.CharacterEntity;
+import com.alkemy.disney.disney.entity.MovieEntity;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.mapper.CharacterMapper;
 import com.alkemy.disney.disney.repository.CharacterRepository;
+import com.alkemy.disney.disney.repository.MovieRepository;
 import com.alkemy.disney.disney.repository.specifications.CharacterSpecification;
 import com.alkemy.disney.disney.service.CharacterService;
+import com.alkemy.disney.disney.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,12 @@ public class CharacterServiceImpl implements CharacterService {
     private CharacterSpecification characterSpecification;
     @Autowired
     private CharacterRepository characterRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
+    private MovieService movieService;
 
     @Autowired
     private CharacterMapper characterMapper;
@@ -70,6 +79,11 @@ public class CharacterServiceImpl implements CharacterService {
     public void delete(Long id) {
         Optional<CharacterEntity> result = characterRepository.findById(id);
         if(result.isPresent()){
+            for(MovieEntity auxMovie : movieRepository.findAll()){
+                if(auxMovie.getCharacters().contains(result.get())){
+                    movieService.removeCharacter(auxMovie.getId(), result.get().getId());
+                }
+            }
             characterRepository.deleteById(id);
         }else{
             throw new ParamNotFound("character id not found");

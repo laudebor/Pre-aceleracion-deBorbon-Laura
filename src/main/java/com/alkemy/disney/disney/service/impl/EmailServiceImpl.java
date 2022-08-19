@@ -30,12 +30,12 @@ public class EmailServiceImpl implements EmailService {
         if(!enabled) {
             return;
         }
-        String apiKey = env.getProperty("EMAIL_API_KEY");
-
+        //String apiKey = env.getProperty("EMAIL_API_KEY");
+        String apiKey = "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";
         Email fromEmail = new Email(emailSender);
         Email toEmail = new Email(email);
-        Content content = new Content("text/plain","Welcome!");
-        String subject = "Disney API";
+        Content content = new Content("text/plain","Welcome " + email + " to the Disney Alkemy application! Enjoy it!");
+        String subject = "Welcome to Disney Alkemy";
 
         Mail mail= new Mail(fromEmail, subject, toEmail, content);
         SendGrid sg = new SendGrid(apiKey);
