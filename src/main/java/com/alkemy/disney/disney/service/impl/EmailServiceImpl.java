@@ -26,12 +26,16 @@ public class EmailServiceImpl implements EmailService {
     @Value("${alkemy.email.enabled}")
     private boolean enabled;
 
-    public void sendWelcomeEmailTo(String email) {
-        
-        String apiKey = env.getProperty("EMAIL_API_KEY");
+    public void sendWelcomeEmailTo(String to) {
+
+        if(!enabled){
+            return;
+        }
+
+        String apiKey =  env.getProperty("EMAIL_API_KEY");
         Email fromEmail = new Email(emailSender);
-        Email toEmail = new Email(email);
-        Content content = new Content("text/plain","Welcome " + email + " to the Disney Alkemy application! Enjoy it!");
+        Email toEmail = new Email(to);
+        Content content = new Content("text/plain","Welcome " + to + " to the Disney Alkemy application! Enjoy it!");
         String subject = "Welcome to Disney Alkemy";
 
         Mail mail= new Mail(fromEmail, subject, toEmail, content);
@@ -47,7 +51,8 @@ public class EmailServiceImpl implements EmailService {
             System.out.println(response.getBody());
             System.out.println(response.getHeaders());
         } catch (IOException ex) {
-            new IOException(ex.getMessage());
+            //System.out.println("Error trying to send the email");
+            new IOException("Error trying to send the email. " + ex.getMessage());
         }
     }
 }
