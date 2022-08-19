@@ -41,13 +41,13 @@ public class UserAuthController {
         this.jwtTokenUtils = jwtTokenUtils;
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> signUp(@Valid @RequestBody UserDTO user) throws Exception{
         userDetailsCustomService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> signIn(@RequestBody AuthenticationRequest authenticationRequest) throws Exception{
 
         UserDetails userDetails;
