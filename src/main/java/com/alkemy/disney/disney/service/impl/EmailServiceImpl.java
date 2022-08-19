@@ -27,11 +27,8 @@ public class EmailServiceImpl implements EmailService {
     private boolean enabled;
 
     public void sendWelcomeEmailTo(String email) {
-        if(!enabled) {
-            return;
-        }
-        //String apiKey = env.getProperty("EMAIL_API_KEY");
-        String apiKey = "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";
+        
+        String apiKey = env.getProperty("EMAIL_API_KEY");
         Email fromEmail = new Email(emailSender);
         Email toEmail = new Email(email);
         Content content = new Content("text/plain","Welcome " + email + " to the Disney Alkemy application! Enjoy it!");
